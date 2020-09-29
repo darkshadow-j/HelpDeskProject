@@ -1,0 +1,59 @@
+<div class="page-header">
+  <h3 class="page-title">
+    Orders
+  </h3>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="javascript:;">Ecommerce</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Orders</li>
+    </ol>
+  </nav>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Wszystkie zgłoszenia zarejestowane w systemie</h4>
+        <div class="row">
+          <div class="col-12">
+            <div class="table-responsive">
+              <table datatable class="table">
+                <thead>
+                <tr class="bg-primary text-white">
+                  <th>ID</th>
+                  <th>Kategoria</th>
+                  <th>Temat</th>
+                  <th>Osoba zgłaszająca</th>
+                  <th>Realizuje</th>
+                  <th>Status</th>
+                  <th>Akcja</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let ticket of tickets">
+                  <td>{{ticket.id}}</td>
+                  <td>{{ticket.category.categoryName}}</td>
+                  <td>{{ticket.topic}}</td>
+                  <td>{{ticket.user.imie}}</td>
+                  <td *ngIf="ticket.assignedTo!=null">{{ticket.assignedTo.imie}}</td>
+                  <td *ngIf="ticket.assignedTo == null">-----</td>
+                  <td>
+                    <label class="badge badge-danger" *ngIf="ticket.ticketFlow == 'NEW'">NOWY</label>
+                    <label class="badge badge-info" *ngIf="ticket.ticketFlow == 'ASSIGNED'">PRZYPISANY</label>
+                    <label class="badge badge-success" *ngIf="ticket.ticketFlow == 'CLOSE'">ZAMKNIĘTY</label>
+                  </td>
+                  <td class="text-right">
+                    <button class="btn btn-light" (click)="showDetails(ticket.id)">
+                      <i class="mdi mdi-eye text-primary"></i>View
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

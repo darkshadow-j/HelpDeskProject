@@ -1,0 +1,121 @@
+<div class="page-header">
+  <h3 class="page-title">
+    Tabs
+  </h3>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="javascript:;">UI Elements</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Ustawienia Kategorii i Sub-kategorii</li>
+    </ol>
+  </nav>
+</div>
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Panel Kategorii</h4>
+        <ngb-tabset class="tab-vertical">
+          <ngb-tab *ngFor="let category of categories">
+            <ng-template ngbTabTitle>
+              {{category.categoryName}}
+              <i class="mdi mdi-home-outline text-info ml-2"></i>
+            </ng-template>
+            <ng-template ngbTabContent>
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Sub-Kategorie dla {{category.categoryName}}</h4>
+                    <div class="table-responsive pt-3">
+                      <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                          <th>
+                            #
+                          </th>
+                          <th>
+                            Nazwa
+                          </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let subCategory of category.subcategories">
+                          <td>
+                            {{subCategory.id}}
+                          </td>
+                          <td>
+                            {{subCategory.subcategoryName}}
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-gradient-primary btn-icon-text" (click)="openModalNewSubcategory(addNewSubCategory, category)">
+                <i class="mdi mdi-file-check btn-icon-prepend"></i>
+                Dodaj Sub-Kategorie
+              </button>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+        <button type="button" class="btn btn-gradient-primary btn-icon-text" (click)="openModalNewCategory(addNewCategory)">
+          <i class="mdi mdi-file-check btn-icon-prepend"></i>
+          Dodaj Kategorie
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template class="modal fade" #addNewSubCategory let-modal>
+  <div class="modal demo-modal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Dodaj nowa Sub-Kategorie</h5>
+          <button type="button" class="close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="subCategoryName">Nazwa</label>
+            <input type="text" class="form-control" id="subCategoryName" placeholder="Nazwa Sub-Kategorii" #subCatName>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="newSubCategorySubmit(subCatName.value)">Wyślij</button>
+          <button type="button" class="btn btn-light" (click)="closeModals()">Zamknij</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template class="modal fade" #addNewCategory let-modal>
+  <div class="modal demo-modal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Dodaj nowa Kategorie</h5>
+          <button type="button" class="close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="CategoryName">Nazwa</label>
+            <input type="text" class="form-control" id="CategoryName" placeholder="Nazwa Kategorii" #CatName>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="newCategorySubmit(CatName.value)">Zapisz</button>
+          <button type="button" class="btn btn-light" (click)="closeModals()">Zamknij</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

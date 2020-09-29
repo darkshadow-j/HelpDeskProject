@@ -1,0 +1,111 @@
+<div class="content-wrapper">
+  <div class="page-header">
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Nowe zgłoszenie usterki</h4>
+          <form >
+            <p class="card-description">Osoba zgłaszająca </p>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Imię</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" value="{{currentUser.imie}}" disabled/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Nazwisko</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="card-description"> Informacje dotyczące zgłoszenia </p>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Kategoria</label>
+                  <div class="col-sm-9">
+                    <select class="form-control" [(ngModel)]="selectedCategory" name="cats">
+                      <option *ngFor="let cat of category" [ngValue]="cat">{{cat.categoryName}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Szczegóły</label>
+                  <div class="col-sm-9" *ngIf="selectedCategory != null">
+                    <select class="form-control" [(ngModel)]="selectedSubCategory" name="subcats">
+                      <option *ngFor="let subc of selectedCategory.subcategories" [ngValue]="subc">{{subc.subcategoryName}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Tytuł</label>
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" #title />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <h4 class="card-title">Opis Usterki</h4>
+                  <textarea class="form-control" id="exampleTextarea1" rows="8" #opis></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Załączniki</h4>
+                      <ngx-dropzone (change)="onSelect($event)">
+
+                        <ngx-dropzone-label>Dodaj zalączniki</ngx-dropzone-label>
+
+                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+
+                          <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+
+                        </ngx-dropzone-preview>
+
+                      </ngx-dropzone>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+                <div class="form-group row">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group row">
+                  <button type="button" class="btn btn-outline-primary btn-icon-text" (click)="onSubmit(title.value, opis.value, null)" [swal]="['Zgłoszenie wysłane!', 'Twoje zgłozsenie zostało zarejestrowane w systemie !' , 'success']">
+                    <i class="mdi mdi-file-check btn-icon-prepend"></i> Submit </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

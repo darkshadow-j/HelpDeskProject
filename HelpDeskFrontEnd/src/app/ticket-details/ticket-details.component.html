@@ -1,0 +1,200 @@
+<div class="row">
+  <div class="col-md-12 grid-margin">
+    <nav aria-label="breadcrumb" role="navigation">
+      <ol class="breadcrumb bg-primary">
+        <li class="breadcrumb-item dropdown" ngbDropdown>
+          <a class="nav-link dropdown-toggle" id="profileDropdown" ngbDropdownToggle>
+            <div class="nav-profile-text">
+              <p class="mb-1">Operacje</p>
+            </div>
+          </a>
+          <div class="dropdown-menu navbar-dropdown preview-list" ngbDropdownMenu aria-labelledby="profileDropdown">
+            <a class="dropdown-item preview-item" href="javascript:;" (click)="assignToMe()" *ngIf="ticketDetails.assignedTo == null">
+              <i class="mdi mdi-cached mr-2 text-success"></i>
+              Przypisz do siebie
+            </a>
+            <a class="dropdown-item preview-item" href="javascript:;" (click)="closeTicket()" *ngIf="ticketDetails.ticketFlow=='ASSIGNED'">
+              <i class="mdi mdi-cached mr-2 text-success"></i>
+              Zamknij sprawę
+            </a>
+            <a class="dropdown-item preview-item" href="javascript:;" (click)="openModal(exampleModalContent)" *ngIf="ticketDetails.assignedTo != null">
+              <i class="mdi mdi-cached mr-2 text-success"></i>
+              Wyślij wiadomość
+            </a>
+          </div>
+        </li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Ticket ID</h4>
+        <p class="card-description">{{ticketDetails.id}}</p>
+        <div class="template-demo">
+          <form id="editable-form" class="editable-form">
+            <div class="form-group row">
+              <label class="col-6 col-lg-4 col-form-label">Identyfikator</label>
+              <div class="col-6 col-lg-8 d-flex align-items-center">
+                <a href="#" id="username" data-type="text" data-pk="1">{{ticketDetails.id}}</a>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-6 col-lg-4 col-form-label">Kategoria</label>
+              <div class="col-6 col-lg-8 d-flex align-items-center">
+                <a href="#" id="username" data-type="text" data-pk="1">{{ticketDetails.category.categoryName}}</a>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-6 col-lg-4 col-form-label">Sub-Kategoria</label>
+              <div class="col-6 col-lg-8 d-flex align-items-center">
+                <a href="#" id="username" data-type="text" data-pk="1">{{ticketDetails.subcategory.subcategoryName}}</a>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-6 col-lg-4 col-form-label">Priorytet</label>
+              <div class="col-6 col-lg-8 d-flex align-items-center">
+                <a href="#" id="username" data-type="text" data-pk="1">{{ticketDetails.ticketPriority}}</a>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-6 col-lg-4 col-form-label">Status</label>
+              <div class="col-6 col-lg-8 d-flex align-items-center" *ngIf="priorityChange">
+                <label class="badge badge-danger" *ngIf="ticketDetails.ticketFlow == 'NEW'" (click)="changePriority()">NOWY</label>
+                <label class="badge badge-info" *ngIf="ticketDetails.ticketFlow == 'ASSIGNED'"
+                       (click)="changePriority()">PRZYPISANY</label>
+                <label class="badge badge-success" *ngIf="ticketDetails.ticketFlow == 'CLOSE'"
+                       (click)="changePriority()">ZAMKNIĘTY</label>
+              </div>
+              <div class="col-6 col-lg-8 d-flex align-items-center" *ngIf="!priorityChange">
+                <select class="form-control" [name]="selectedPriority">
+                  <option value="LOW">LOW</option>
+                  <option value="MEDIUM">MEDIUM</option>
+                  <option value="HIGH">HIGH</option>
+                </select>
+                <button type="submit" class="btn btn-gradient-primary mr-2" (click)="changePriority()">Submit</button>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-6 col-lg-4 col-form-label">Realizuje</label>
+              <div class="col-6 col-lg-8 d-flex align-items-center">
+                <a href="#" id="username" data-type="text" data-pk="1" *ngIf="ticketDetails.assignedTo != null">{{ticketDetails.assignedTo.imie}}</a>
+                <a href="#" id="usernames" data-type="text" data-pk="1" *ngIf="ticketDetails.assignedTo == null">BRAK</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Osoba zgłaszająca</h4>
+        <p class="card-description"></p>
+        <div class="template-demo">
+          <form id="editable-form" class="editable-form">
+            <div class="form-group row">
+              <label class="col-6 col-lg-4 col-form-label">Imię i nazwisko</label>
+              <div class="col-6 col-lg-8 d-flex align-items-center">
+                <a href="#" id="username" data-type="text" data-pk="1">{{ticketDetails.user.imie}}</a>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-6 col-lg-4 col-form-label">Adres e-mail</label>
+              <div class="col-6 col-lg-8 d-flex align-items-center">
+                <a id="username" data-type="text" data-pk="1">{{ticketDetails.user.email}}</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Opis</h4>
+        <p class="card-description"></p>
+        <div class="template-demo">
+          <form id="editable-form" class="editable-form">
+            <div class="form-group row">
+              <label class="col-2 col-lg-4 col-form-label">Temat</label>
+              <div class="col-10 col-lg-8 d-flex align-items-center">
+                <a href="#" id="username" data-type="text" data-pk="1">{{ticketDetails.topic}}</a>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-2 col-lg-4 col-form-label">Szczegółowy opis</label>
+              <div class="col-10 col-lg-8 d-flex align-items-center">
+                <a id="username" data-type="text" data-pk="1">{{ticketDetails.description}}</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Załązniki</h4>
+        <div class="mt-4">
+          <owl-carousel-o [options]="carouselOption2">
+            <ng-template carouselSlide *ngFor="let image of retrievedImage">
+              <img src="{{image}}" alt="image" width="50"/>
+            </ng-template>
+          </owl-carousel-o>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Odpowiedzi</h4>
+        <div class="mt-4">
+          <ngb-accordion [closeOthers]="true" activeIds="collapse-5" class="accordion-bordered" *ngFor="let message of ticketDetails.message">
+            <ngb-panel id="collapse-4" title="{{message.user.imie}}">
+              <ng-template ngbPanelContent>
+                {{message.message}}
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<ng-template class="modal fade" #exampleModalContent let-modal>
+  <div class="modal demo-modal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Wyślij nową wiadomość</h5>
+          <button type="button" class="close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="exampleTextarea1">Wiadomość</label>
+            <textarea class="form-control" id="exampleTextarea1" rows="10" #message></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="addNewMessageToTicket(message.value)">Wyślij</button>
+          <button type="button" class="btn btn-light" (click)="closeModals()">Zamknij</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
